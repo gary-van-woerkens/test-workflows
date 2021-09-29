@@ -9,12 +9,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    - run: echo "It Works!"
+    # - run: echo "It Works!"
 
-    - uses: SvanBoxel/organization-workflow@main
-      with:
-        id: ${{ github.event.client_payload.id }}
-        callback_url: ${{ github.event.client_payload.callback_url }}
-        sha: ${{ github.event.client_payload.sha }}
-        run_id: ${{ github.run_id }}
-        name: ${{ github.workflow }}
+    # - uses: SvanBoxel/organization-workflow@main
+    #   with:
+    #     id: ${{ github.event.client_payload.id }}
+    #     callback_url: ${{ github.event.client_payload.callback_url }}
+    #     sha: ${{ github.event.client_payload.sha }}
+    #     run_id: ${{ github.run_id }}
+    #     name: ${{ github.workflow }}
+
+    - name: Curl /register
+      run: |
+        curl -G \
+          "${{ github.event.client_payload.callback_url }}" \
+          -d id=${{ github.event.client_payload.id }} \
+          -d run_id=${{ github.run_id }} \
+          -d sha=${{ github.event.client_payload.sha }} \
+          -d enforce=false \
+          -d enforce_admin=false \
+          --data-urlencode "name=${{ env.name || github.workflow }}" \
+          --data-urlencode "documentation=.github/workflows/compliance-info.md"
