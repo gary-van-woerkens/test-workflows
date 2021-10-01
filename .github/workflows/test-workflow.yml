@@ -9,16 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    # - run: echo "It Works!"
-
-    # - uses: SvanBoxel/organization-workflow@main
-    #   with:
-    #     id: ${{ github.event.client_payload.id }}
-    #     callback_url: ${{ github.event.client_payload.callback_url }}
-    #     sha: ${{ github.event.client_payload.sha }}
-    #     run_id: ${{ github.run_id }}
-    #     name: ${{ github.workflow }}
-
     - name: Register workflow run to SocialGouv application
       run: |
         curl -G \
