@@ -19,15 +19,15 @@ jobs:
     #     run_id: ${{ github.run_id }}
     #     name: ${{ github.workflow }}
 
-    - name: Curl /register
+    - name: Register workflow run to SocialGouv application
       run: |
         curl -G \
           "${{ github.event.client_payload.callback_url }}" \
           -d id=${{ github.event.client_payload.id }} \
-          -d run_id=${{ github.run_id }} \
+          -d runId=${{ github.run_id }} \
           -d sha=${{ github.event.client_payload.sha }} \
-          -d repo_owner=${{ github.event.client_payload.repository.owner }} \
-          -d repo_name=${{ github.event.client_payload.repository.name }} \
+          -d repoOwner=${{ github.event.client_payload.repository.owner }} \
+          -d repoName=${{ github.event.client_payload.repository.name }} \
           -d enforce=false \
           -d enforce_admin=false \
           --data-urlencode "name=${{ env.name || github.workflow }}" \
